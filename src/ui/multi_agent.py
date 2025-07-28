@@ -23,7 +23,7 @@ class ApprovalTerminationStrategy(TerminationStrategy):
         """Check if the agent should terminate."""
         for message in reversed(history):
             if (message.role == AuthorRole.USER and
-                message.content.upper() in "APPROVED"
+                "APPROVED" in message.content.upper()
             ):
                 return True
         return False
