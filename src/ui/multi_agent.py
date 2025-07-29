@@ -59,12 +59,12 @@ class ApprovalTerminationStrategy(TerminationStrategy):
                     f.write(html_code)
                 print("📁 Arquivo index.html salvo com sucesso.")
 
-                if not os.path.exists("push_to_git.sh"):
+                if not os.path.exists("push_to_github.sh"):
                     self.create_git_script()
                 
-                os.chmod("push_to_git.sh", 0o755)
+                os.chmod("push_to_github.sh", 0o755)
                 
-                result = subprocess.run(["bash", "push_to_git.sh"], 
+                result = subprocess.run(["bash", "push_to_github.sh"], 
                                       capture_output=True, text=True, check=True)
                 print("✅ Arquivo enviado para o repositório Git!")
                 
@@ -74,10 +74,10 @@ class ApprovalTerminationStrategy(TerminationStrategy):
             print("⚠️  Nenhum código HTML encontrado.")
 
     def create_git_script(self):
-        """Cria o script push_to_git.sh se não existir."""
-        # Obter o diretório onde o script Python está localizado
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        git_script_path = os.path.join(script_dir, "push_to_git.sh")
+        """Cria o script push_to_github.sh se não existir."""
+        # Definir caminho específico para a pasta ui
+        ui_dir = os.path.join(os.getcwd(), "src", "ui")
+        git_script_path = os.path.join(ui_dir, "push_to_github.sh")
         
         script_content = '''#!/bin/bash
 echo "🚀 Iniciando push para o repositório Git..."
